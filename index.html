@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://kit.fontawesome.com/822e3a2b1d.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 80px;
+      text-align: center;
+    }
+    .aliens {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      justify-items: center;
+    }
+    .ship {
+      padding: 20px;
+      text-align: center;
+      width: 225px;
+    }
+    .fa-rocket {
+      font-size: 40px;
+    }
+    .destroyed {
+      color: grey;
+    }
+    #attack {
+      width: 300px;
+      margin: 50px;
+      height: 50px;
+      font-size: 20px;
+      background-color: rgb(94, 187, 94);
+    }
+  </style>
+</head>
+<body>
+  <h1>Hostile Aliens!</h1>
+  <div class="aliens"></div>
+  <button id="attack">Attack!</button>
+  <script>
+    const aliensHtml = document.querySelector(".aliens");
+    const ships = [["mother", 100, 9], ["defence", 80, 10], ["defence", 80, 10], ["defence", 80, 10], ["defence", 80, 10], ["defence", 80, 10], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12], ["attack", 45, 12]];
+    const drawShips = () => {
+      aliensHtml.innerHTML = ships.map(ship => {
+        return `<div class="${ship[0]} ship"><i class="fas fa-rocket"></i><p>${ship[0]} ship</p><p>health still remaining: ${ship[1]}</p></div>`;
+      }).join("");
+    };
+    drawShips();
+    document.querySelector("#attack").addEventListener("click", () => {attack()});
+    const attack = () => {
+      const randomShip = Math.floor(Math.random() * 14);
+      if (ships[randomShip][0] !== "destroyed") {
+        ships[randomShip][1] = ships[randomShip][1] - ships[randomShip][2];
+        if (ships[randomShip][1] <= 0) {
+        ships[randomShip][0] = "destroyed"
+        ships[randomShip][1] = 0;
+        }
+      } else if (ships[randomShip][0] === "destroyed") {
+        attack();
+      }
+      drawShips();
+
+      if (ships[0][1] <= 0) {
+        endGame();
+      }
+    };
+    const endGame = () => {
+      aliensHtml.innerHTML = "Well done! You beat the alliens. CAUTION new wave in 4 seconds";
+      setTimeout(() => {location.reload(true)}, 4000);
+    };
+  </script>
+</body>
+</html>
