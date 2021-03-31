@@ -29,15 +29,15 @@
       margin-bottom: 50px;
     }
     .aliens {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      justify-items: center;
+      display: grid;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: repeat(7, 1fr);
+      width: 100%;
     }
     .ship {
       padding: 20px;
       text-align: center;
-      width: 225px;
+      margin: 0px;
     }
     .fa-rocket {
       font-size: 40px;
